@@ -1,0 +1,133 @@
+<div class="modal-backdrop formWrapper">
+
+
+    <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()" class="form-container" id="invoiceForm">
+<h2>Bill From</h2>
+      <!-- Sender Address -->
+      <div formGroupName="senderAddress">
+        <!-- <h2>Sender Address</h2> -->
+         <div>
+           <label for="street">Street</label>    
+           <input formControlName="street" placeholder="Street" />
+         </div><br>
+         <div class="input-group">
+          <div class="input-box">
+            <label for="city">City</label>
+            <input formControlName="city" placeholder="City" />
+          </div>
+          <div class="input-box">
+            <label for="postCode">Post Code</label>
+            <input formControlName="postCode" placeholder="Post Code" />
+          </div>
+          <div class="input-box">
+            <label for="country">Country</label>
+            <input formControlName="country" placeholder="Country" />
+          </div>
+          </div>
+      </div>
+
+      <!-- Client Info -->
+      <div>
+        <label for="clientName">Client Name</label>
+        <input formControlName="clientName" placeholder="Client Name" />
+      </div>
+      <div>
+        <label for="clientEmail">Client Email</label>
+        <input formControlName="clientEmail" placeholder="Client Email" type="email" />
+      </div>
+    
+
+
+      <!-- Client Address -->
+      <div formGroupName="clientAddress">
+        <h2>Client Address</h2>
+          <div>
+        <label for="street">Street</label>
+        <input formControlName="street" placeholder="Street" />
+      </div><br>
+       <div class="input-group">
+        <div class="input-box">
+          <label for="city">City</label>
+        <input formControlName="city" placeholder="City" />
+        </div>
+        <div class="input-box">
+          <label for="postCode">Post Code</label>
+          <input formControlName="postCode" placeholder="Post Code" />
+
+        </div>
+        <div class="input-box">
+          <label for="country">Country</label>
+          <input formControlName="country" placeholder="Country" />
+        </div>
+       </div>
+      </div>
+
+      <!-- Invoice Info -->
+  <div>
+    <label for="description">description</label>
+    <input formControlName="description" placeholder="Description" />
+  </div>      
+  <div class="input-group group2">
+    <div class="input-box">
+      <label for="createdAt" >Issued Payments</label>
+      <input formControlName="createdAt" placeholder="Created At" type="date" />
+    </div>
+    <div class="input-box">
+      <label for="paymentDue">Payment Terms</label>
+      <input formControlName="paymentDue" placeholder="Payment Due" type="date" />
+    </div>
+  </div>
+      <input formControlName="paymentTerms" type="number" />
+      <select formControlName="status">
+        <option value="draft">Draft</option>
+        <option value="pending">Pending</option>
+        <option value="paid">Paid</option>
+      </select>
+
+      <!-- Items -->
+      <div formArrayName="items">
+        <div *ngFor="let item of items.controls; index as i" [formGroupName]="i">
+          <div class="input-group2">
+            <div class="input-box">
+              <label for="name">Item Name</label>
+              <input formControlName="name" placeholder="Item Name" />
+            </div>
+            <div class="input-box">
+              <label for="quantity">Quantity</label>
+              <input formControlName="quantity" placeholder="Qty" type="number" />
+            </div>
+              <div class="input-box">
+                <label for="price">Price</label>
+                <input formControlName="price" placeholder="Price" type="number" />
+              </div>
+              <div class="input-box">
+                <p class="total">
+                  <strong>Total</strong>
+                  <span>{{ item.value.price * item.value.quantity | currency:'USD':'symbol':'1.2-2' }}</span>
+                </p>
+                <!-- <input formControlName="total" [disabled]="true" placeholder="Total" /> -->
+              </div>
+  <div class="input-box">
+        <ion-icon name="trash-outline" (click)="removeItem(i)" style="cursor: pointer;"></ion-icon>
+
+      </div>
+         
+          </div>
+
+         
+        </div>
+      </div>
+              <button class="add-item" type="button" (click)="addItem()">+ Add Item</button>
+      <div class="buttons">
+
+
+      <!-- Total -->
+        <div class="button-group">
+
+          <button type="submit">Save Invoice</button>
+          <button type="button" (click)="close.emit()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  
+</div>
