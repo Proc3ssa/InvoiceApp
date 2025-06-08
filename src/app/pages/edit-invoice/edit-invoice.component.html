@@ -8,4 +8,4 @@
   *ngIf="invoiceData"
   [formData]="invoiceData">
 </app-new-invoice-form>
-<button *ngIf="invoiceData" [routerLink]="['/invoices', invoiceData.id]"  >Cancel</button>
+<a *ngIf="invoiceData" href="/invoices/{{invoiceData.id}}">Cancel</a>

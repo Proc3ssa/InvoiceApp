@@ -34,4 +34,8 @@ export class EditInvoiceComponent {
     }
   }
 
+  onCancel() {
+    console.log('onCancel called', this.invoiceData);
+    window.location.href = `/invoices/${this.invoiceData?.id}`;
+  }
 }
