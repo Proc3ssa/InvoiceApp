@@ -76,6 +76,11 @@ position: relative;
                 opacity: 0.75;
                 color: #fff;;
             }
+            @media (prefers-color-scheme: dark) {
+                h2 {
+                  color: white !important;
+                }
+              }
         }
         .invoice-container{
             margin: 1rem 0;
