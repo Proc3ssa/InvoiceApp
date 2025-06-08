@@ -21,7 +21,7 @@ import { InvoiceService } from '../../services/invoice.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-new-invoice-form',
+  selector: 'app-new-invoice-form', // Add comment
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, IonicModule],
   templateUrl: './new-invoice-form.component.html',

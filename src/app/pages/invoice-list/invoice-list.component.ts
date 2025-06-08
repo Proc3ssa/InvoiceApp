@@ -83,17 +83,13 @@ export class InvoiceListComponent implements OnInit, OnDestroy {
   }
 
   closeModal() {
+    this.isNewModalOpen = false;
     this.router.navigate(['/invoices']);
   }
 
   handleInvoiceSaved(newInvoice: Invoice) {
-    const index = this.invoices.findIndex(inv => inv.id === newInvoice.id);
-
-    if (index !== -1) {
-      this.invoices[index] = newInvoice;
-    } else {
-      this.invoices.push(newInvoice);
-    }
+    // The invoiceService handles updating the invoices array
+    // so we don't need to manually update the invoices array here.
 
     this.applyFilter();
     this.closeModal();
