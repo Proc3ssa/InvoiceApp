@@ -17,6 +17,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { Invoice } from '../../models/invoice.model';
 import { IonicModule } from '@ionic/angular';
+import { InvoiceService } from '../../services/invoice.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-new-invoice-form',
@@ -31,7 +33,10 @@ export class NewInvoiceFormComponent implements OnChanges {
 
   invoiceForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private invoiceService: InvoiceService
+  ) {
     this.invoiceForm = this.fb.group({
       senderAddress: this.fb.group({
         street: ['', Validators.required],
@@ -124,10 +129,12 @@ export class NewInvoiceFormComponent implements OnChanges {
   }
 
   onSubmit() {
-    if (this.invoiceForm.valid) {
-      const submittedData = this.invoiceForm.getRawValue() as Invoice;
-      localStorage.removeItem('invoiceDraft');
-      this.close.emit(submittedData);
+   if (this.invoiceForm.valid) {
+     const submittedData = this.invoiceForm.getRawValue() as Invoice;
+     submittedData.id = uuidv4();
+     localStorage.removeItem('invoiceDraft');
+     this.invoiceService.addInvoice(submittedData);
+     this.close.emit(submittedData);
     } else {
       this.invoiceForm.markAllAsTouched();
     }

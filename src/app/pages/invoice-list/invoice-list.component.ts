@@ -1,9 +1,10 @@
 // === invoice-list.component.ts ===
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '../../services/invoice.service';
 import { Invoice } from '../../models/invoice.model';
+import { Subscription } from 'rxjs';
 import { NewInvoiceFormComponent } from '../new-invoice-form/new-invoice-form.component';
 import { DueDatePipe } from '../../shared/due-date.pipe';
 import { HighlightOverdueDirective } from '../../shared/highlight-overdue.directive';
@@ -23,11 +24,12 @@ import { Sidebar } from '../../components/sidebar/sidebar.component';
   templateUrl: './invoice-list.component.html',
   styleUrls: ['./invoice-list.component.scss']
 })
-export class InvoiceListComponent {
+export class InvoiceListComponent implements OnInit, OnDestroy {
   invoices: Invoice[] = [];
   filteredInvoices: Invoice[] = [];
   isNewModalOpen = false;
   selectedStatus: string = 'all';
+  private invoicesSubscription!: Subscription;
 
   constructor(
     private invoiceService: InvoiceService,
@@ -36,7 +38,7 @@ export class InvoiceListComponent {
   ) {}
 
   ngOnInit(): void {
-    this.invoiceService.getInvoices().subscribe((data) => {
+    this.invoicesSubscription = this.invoiceService.getInvoices().subscribe((data) => {
       this.invoices = data;
       this.applyFilter();
     });
@@ -72,7 +74,12 @@ export class InvoiceListComponent {
 
   deleteInvoice(id: string) {
     this.invoices = this.invoices.filter(inv => inv.id !== id);
-    this.applyFilter();
+  }
+
+  ngOnDestroy(): void {
+    if (this.invoicesSubscription) {
+      this.invoicesSubscription.unsubscribe();
+    }
   }
 
   closeModal() {

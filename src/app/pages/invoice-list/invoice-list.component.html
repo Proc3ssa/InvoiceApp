@@ -61,7 +61,7 @@
 <!-- Modal -->
 <app-new-invoice-form
 *ngIf="isNewModalOpen"
-(close)="closeModal()">
+(close)="handleInvoiceSaved($event)">
 </app-new-invoice-form>
 
 </section>
