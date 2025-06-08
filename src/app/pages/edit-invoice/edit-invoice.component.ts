@@ -34,7 +34,4 @@ export class EditInvoiceComponent {
     }
   }
 
-  onClose() {
-    this.router.navigate(['/invoices', this.invoiceData?.id]);
-  }
 }

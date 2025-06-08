@@ -44,11 +44,8 @@ export class InvoiceDetailsComponent {
   }
 
   openEditOverlay() {
-    this.isEditModalOpen = true;
-    this.router.navigate(
-      [{ outlets: { modal: ['edit'] } }],
-      { relativeTo: this.route }
-    );
+    const invoiceId = this.route.snapshot.paramMap.get('id');
+    this.router.navigate([`/invoices/${invoiceId}/edit`]);
   }
 
   closeEditOverlay() {
