@@ -61,4 +61,11 @@ export class InvoiceDetailsComponent {
       this.invoice.status = 'paid';
     }
   }
+
+  deleteInvoice() {
+    if (this.invoice) {
+      this.invoiceService.deleteInvoice(this.invoice.id);
+      this.router.navigate(['/invoices']);
+    }
+  }
 }

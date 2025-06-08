@@ -56,6 +56,13 @@ export class InvoiceService {
     this.saveInvoicesToLocalStorage(updatedInvoices);
   }
 
+  deleteInvoice(invoiceId: string): void {
+    const currentInvoices = this.invoicesSubject.getValue();
+    const updatedInvoices = currentInvoices.filter(invoice => invoice.id !== invoiceId);
+    this.invoicesSubject.next(updatedInvoices);
+    this.saveInvoicesToLocalStorage(updatedInvoices);
+  }
+
   updateInvoice(invoice: Invoice): void {
     const currentInvoices = this.invoicesSubject.getValue();
     const updatedInvoices = currentInvoices.map(inv => inv.id === invoice.id ? invoice : inv);
