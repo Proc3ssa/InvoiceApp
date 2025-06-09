@@ -1,8 +1,8 @@
 // === new-invoice-form.component.ts ===
 import {
-  Component,
   EventEmitter,
   Input,
+  Component,
   Output,
   OnChanges,
   SimpleChanges
@@ -17,9 +17,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { Invoice } from '../../models/invoice.model';
 import { IonicModule } from '@ionic/angular';
+import { InvoiceService } from '../../services/invoice.service';
 
 @Component({
-  selector: 'app-new-invoice-form',
+  selector: 'app-new-invoice-form', // Add comment
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, IonicModule],
   templateUrl: './new-invoice-form.component.html',
@@ -31,7 +32,10 @@ export class NewInvoiceFormComponent implements OnChanges {
 
   invoiceForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private invoiceService: InvoiceService
+  ) {
     this.invoiceForm = this.fb.group({
       senderAddress: this.fb.group({
         street: ['', Validators.required],
@@ -123,13 +127,25 @@ export class NewInvoiceFormComponent implements OnChanges {
     this.updateTotal();
   }
 
-  onSubmit() {
-    if (this.invoiceForm.valid) {
-      const submittedData = this.invoiceForm.getRawValue() as Invoice;
-      localStorage.removeItem('invoiceDraft');
-      this.close.emit(submittedData);
+ onSubmit() {
+   if (this.invoiceForm.valid) {
+     const submittedData = this.invoiceForm.getRawValue() as Invoice;
+     submittedData.id = this.generateId(6);
+     localStorage.removeItem('invoiceDraft');
+     this.invoiceService.addInvoice(submittedData);
+     this.close.emit(submittedData);
     } else {
       this.invoiceForm.markAllAsTouched();
     }
+  }
+
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 }
