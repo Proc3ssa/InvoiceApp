@@ -20,7 +20,7 @@ This project is an Angular-based invoice management application. It allows users
 1.  Clone the repository:
 
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/Proc3ssa/InvoiceApp
     ```
 2.  Navigate to the project directory:
 
@@ -43,7 +43,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Screenshots
 
-[screenshot](./src/assets/screenshot.png)
+![screenshot](./src/assets/screenshot.png)
 
 ## Author
 
