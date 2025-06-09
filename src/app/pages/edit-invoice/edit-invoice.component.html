@@ -6,6 +6,6 @@
 </div>
 <app-new-invoice-form
   *ngIf="invoiceData"
-  [formData]="invoiceData"
-  (close)="onClose()">
+  [formData]="invoiceData">
 </app-new-invoice-form>
+<a *ngIf="invoiceData" href="/invoices/{{invoiceData.id}}">Cancel</a>

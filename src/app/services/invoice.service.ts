@@ -56,4 +56,11 @@ export class InvoiceService {
     this.saveInvoicesToLocalStorage(updatedInvoices);
   }
 
+  updateInvoice(invoice: Invoice): void {
+    const currentInvoices = this.invoicesSubject.getValue();
+    const updatedInvoices = currentInvoices.map(inv => inv.id === invoice.id ? invoice : inv);
+    this.invoicesSubject.next(updatedInvoices);
+    this.saveInvoicesToLocalStorage(updatedInvoices);
+  }
+
 }

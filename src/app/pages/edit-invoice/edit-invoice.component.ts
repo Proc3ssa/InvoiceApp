@@ -34,7 +34,8 @@ export class EditInvoiceComponent {
     }
   }
 
-  onClose() {
-    this.router.navigate(['/invoices', this.invoiceData?.id]);
+  onCancel() {
+    console.log('onCancel called', this.invoiceData);
+    window.location.href = `/invoices/${this.invoiceData?.id}`;
   }
 }

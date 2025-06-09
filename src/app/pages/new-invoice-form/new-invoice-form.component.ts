@@ -130,14 +130,15 @@ export class NewInvoiceFormComponent implements OnChanges {
  onSubmit() {
    if (this.invoiceForm.valid) {
      const submittedData = this.invoiceForm.getRawValue() as Invoice;
-     submittedData.id = this.generateId(6);
      localStorage.removeItem('invoiceDraft');
-     this.invoiceService.addInvoice(submittedData);
-     this.close.emit(submittedData);
-    } else {
-      this.invoiceForm.markAllAsTouched();
-    }
-  }
+     this.invoiceService.updateInvoice(submittedData);
+     // Navigate back to invoice details page
+     // Assuming invoice id is available in submittedData
+     window.location.href = `/invoices/${submittedData.id}`;
+   } else {
+     this.invoiceForm.markAllAsTouched();
+   }
+ }
 
   generateId(length: number): string {
     let result = '';
